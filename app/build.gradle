@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.example.multimoduledagger"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':foo_public')
+    implementation project(':bar_public')
+    implementation project(':baz_public')
+
+    // Top-level target that wires everything together needs to depend on "internal" targets.
+    // It can be a separate component from the one that contains activities etc.
+    implementation project(':foo_internal')
+    implementation project(':bar_internal')
+    implementation project(':baz_internal')
+}
